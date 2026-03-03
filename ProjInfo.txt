@@ -1,0 +1,32 @@
+Project Title:All-in-one Student Study Planner 
+
+Main Purpose:
+This web app helps students manage their semester in one place by combining a calendar, to-do list, and organize all your study planning tools in one site. The goal is to make it easier to track assignments/exams, organize tasks, calculate grades and the grades you need and plan study sessions so students don’t fall behind.
+
+Problem it solves / purpose it serves:
+Students often juggle multiple apps (calendar, notes, reminders, syllabus documents). This causes missed deadlines and disorganized planning. This app centralizes the most important planning features into one dashboard.
+
+Intended users:
+College students (especially students managing multiple classes, exams, labs, and weekly deadlines).
+
+Key features / actions users can perform:
+1) User Accounts
+   - Register (first name, last name, username/email, password)
+   - Login (username/email + password)
+
+2) Planner tab (the main “item” the user creates/manages)
+   - Main content form will be a large calendar with all your assignments and exams 
+   - Create a planner item (task/assignment/study session) with a title and description
+   - View a list of created/ongoing items
+   - Edit/update an existing item
+   - Delete an item
+   - Mark items as complete 
+
+3) Organization / Productivity 
+   - Filter items by class or due date
+   - Search items by keywords
+   - Calendar view that shows upcoming deadlines and study sessions
+
+Two main entities for the project (initial design):
+- User: holds account data and login credentials
+- PlannerItem: a task/note/study session owned by a user (CRUD operations)
