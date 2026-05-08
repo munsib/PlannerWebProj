@@ -16,6 +16,7 @@
 <main>
   <h1>Planner Items</h1>
   <p>Add a task or study session.</p>
+  <p id="plannerWelcome"></p>
 
   <img
     class="hero-image"
@@ -26,12 +27,30 @@
 
   <form id="plannerForm">
 
-    <label>Planner Item</label>
-    <textarea id="plannerText"></textarea>
+    <label>Title</label>
+    <input id="plannerTitle" type="text">
+
+    <label>Description</label>
+    <textarea id="plannerDescription"></textarea>
+
+    <label>Item Type</label>
+    <input id="plannerType" type="text" value="study session">
+
+    <label>Due Date</label>
+    <input id="plannerDueDate" type="date">
 
     <input type="submit" value="Add Item">
 
+    <p id="plannerMessage"></p>
+
   </form>
+
+  <button id="logoutButton" type="button">Logout</button>
+
+  <section>
+    <h2>Last Created Item</h2>
+    <pre id="plannerOutput">No planner item has been created yet.</pre>
+  </section>
 
   <h2>Example Items</h2>
   <ul>
