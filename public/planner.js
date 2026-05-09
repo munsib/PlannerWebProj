@@ -48,7 +48,7 @@ async function addPlannerItem(event) {
     );
 
     try {
-        const response = await fetch("/api/planner-items", {
+        const response = await fetch("/plannerItem/createPlannerItem", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

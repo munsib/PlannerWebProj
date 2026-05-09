@@ -35,7 +35,7 @@ async function registerUser(event) {
     const newUser = new User(firstName, lastName, username, email, password);
 
     try {
-        const response = await fetch("/api/users/register", {
+        const response = await fetch("/user/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -78,7 +78,7 @@ async function loginUser(event) {
     const user = new LoginUser(identifier, password);
 
     try {
-        const response = await fetch("/api/users/login", {
+        const response = await fetch("/user/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

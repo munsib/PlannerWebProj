@@ -1,24 +1,27 @@
-const express = require("express");
-const path = require("path");
 require("dotenv").config();
+const express = require("express");
+const app = express();
+const path = require("path");
+
+app.use(express.json());
 
 const userRoutes = require("./server/routes/user");
 const plannerItemRoutes = require("./server/routes/plannerItem");
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+    next();
+});
 
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(__dirname + "/public"));
+app.get("/", (req, res) => res.sendFile(path.join(__dirname, "/public/login.html")));
 
-app.use("/api/users", userRoutes);
-app.use("/api/planner-items", plannerItemRoutes);
+app.use("/user", userRoutes);
+app.use("/plannerItem", plannerItemRoutes);
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "register.html"));
-});
+const PORT = process.env.PORT || 3500;
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}!!`));

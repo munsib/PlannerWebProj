@@ -1,84 +1,62 @@
 const express = require("express");
-const {
-    createPlannerItem,
-    getPlannerItemById,
-    updatePlannerItem,
-    deletePlannerItem
-} = require("../models/plannerItem");
-
 const router = express.Router();
+const PlannerItem = require("../models/plannerItem");
 
-router.post("/", async (req, res) => {
-    try {
-        const plannerItem = await createPlannerItem(req.body);
-        res.status(201).json(plannerItem);
-    } catch (error) {
-        res.status(500).json({
-            message: "Unable to create planner item.",
-            error: error.message
-        });
-    }
-});
-
-router.get("/:id", async (req, res) => {
-    try {
-        const plannerItem = await getPlannerItemById(req.params.id);
-
-        if (!plannerItem) {
-            return res.status(404).json({
-                message: "Planner item not found."
-            });
+router
+    .get("/getAllPlannerItems", async (req, res) => {
+        try {
+            const plannerItems = await PlannerItem.getAllPlannerItems();
+            res.send(plannerItems);
+        } catch (err) {
+            res.status(401).send({ message: err.message });
         }
-
-        return res.status(200).json(plannerItem);
-    } catch (error) {
-        return res.status(500).json({
-            message: "Unable to fetch planner item.",
-            error: error.message
-        });
-    }
-});
-
-router.put("/:id", async (req, res) => {
-    try {
-        const updatedRows = await updatePlannerItem(req.params.id, req.body);
-
-        if (updatedRows === 0) {
-            return res.status(404).json({
-                message: "Planner item not found."
-            });
+    })
+    .post("/createPlannerItem", async (req, res) => {
+        try {
+            const plannerItem = await PlannerItem.createPlannerItem(req.body);
+            res.send(plannerItem);
+        } catch (err) {
+            res.status(401).send({ message: err.message });
         }
+    })
+    .get("/:id", async (req, res) => {
+        try {
+            const plannerItem = await PlannerItem.getPlannerItemById(req.params.id);
 
-        return res.status(200).json({
-            message: "Planner item updated successfully."
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: "Unable to update planner item.",
-            error: error.message
-        });
-    }
-});
+            if (!plannerItem) {
+                throw Error("Planner item not found!");
+            }
 
-router.delete("/:id", async (req, res) => {
-    try {
-        const deletedRows = await deletePlannerItem(req.params.id);
-
-        if (deletedRows === 0) {
-            return res.status(404).json({
-                message: "Planner item not found."
-            });
+            res.send(plannerItem);
+        } catch (err) {
+            res.status(401).send({ message: err.message });
         }
+    })
+    .put("/:id", async (req, res) => {
+        try {
+            const updatedRows = await PlannerItem.updatePlannerItem(req.params.id, req.body);
 
-        return res.status(200).json({
-            message: "Planner item deleted successfully."
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: "Unable to delete planner item.",
-            error: error.message
-        });
-    }
-});
+            if (!updatedRows) {
+                throw Error("Planner item not found!");
+            }
+
+            res.send({ message: "Planner item updated successfully." });
+        } catch (err) {
+            res.status(401).send({ message: err.message });
+        }
+    })
+    .delete("/:id", async (req, res) => {
+        try {
+            const deletedRows = await PlannerItem.deletePlannerItem(req.params.id);
+
+            if (!deletedRows) {
+                throw Error("Planner item not found!");
+            }
+
+            res.send({ message: "Planner item deleted successfully." });
+        } catch (err) {
+            res.status(401).send({ message: err.message });
+        }
+    });
 
 module.exports = router;
